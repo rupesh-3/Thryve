@@ -1,4 +1,5 @@
 import os
+import logging
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from summarizer import summarize
@@ -6,36 +7,42 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# ── App setup ─────────────────────────────────────────────────────────────────
 app = Flask(__name__)
-CORS(app)  # Allow requests from the frontend
+CORS(app)
 
+logging.basicConfig(
+    level=logging.INFO,
+    format="[%(asctime)s] %(levelname)s — %(message)s",
+    datefmt="%H:%M:%S",
+)
+log = logging.getLogger(__name__)
+
+
+# ── Routes ────────────────────────────────────────────────────────────────────
 
 @app.route("/api/health", methods=["GET"])
 def health():
     """Health check endpoint."""
-    return jsonify({"status": "ok", "model": "sshleifer/distilbart-cnn-12-6"})
+    return jsonify({"status": "ok", "method": "extractive-tfidf", "engine": "nltk"})
 
 
 @app.route("/api/summarize", methods=["POST"])
 def summarize_text():
     """
-    Summarize the provided text.
+    Extractive summarization endpoint.
 
     Expected JSON body:
         {
-            "text":       <string>   (required),
-            "min_length": <int>      (optional, default 30),
-            "max_length": <int>      (optional, default 130)
+            "text":          <string>  (required, min 20 words),
+            "num_sentences": <int>     (optional, default 3, range 1-15),
+            "language":      <string>  (optional, default "english"),
+            "min_word_len":  <int>     (optional, default 3, range 2-8)
         }
 
-    Returns JSON:
-        {
-            "summary":             <string>,
-            "input_word_count":    <int>,
-            "summary_word_count":  <int>,
-            "compression_ratio":   <float>,
-            "model":               <string>
-        }
+    Returns JSON with keys:
+        summary, input_word_count, summary_word_count, compression_ratio,
+        num_sentences_in, num_sentences_out, top_sentences, method
     """
     data = request.get_json(silent=True)
 
@@ -43,38 +50,54 @@ def summarize_text():
         return jsonify({"error": "Request body must contain a 'text' field."}), 400
 
     text = data["text"].strip()
+
     if len(text.split()) < 20:
-        return jsonify({"error": "Please provide at least 20 words for a meaningful summary."}), 400
+        return jsonify({
+            "error": "Please provide at least 20 words for a meaningful summary."
+        }), 400
 
-    hf_token = data.get("hf_token", "").strip()
-    if not hf_token:
-        return jsonify({"error": "Hugging Face API token is missing. Please set it in your Profile."}), 400
+    # Parse parameters with safe defaults and clamping
+    try:
+        num_sentences = int(data.get("num_sentences", 3))
+        num_sentences = max(1, min(num_sentences, 15))
+    except (ValueError, TypeError):
+        num_sentences = 3
 
-    min_length = int(data.get("min_length", 30))
-    max_length = int(data.get("max_length", 130))
+    language    = str(data.get("language", "english")).lower().strip()
+    
+    try:
+        min_word_len = int(data.get("min_word_len", 3))
+        min_word_len = max(2, min(min_word_len, 8))
+    except (ValueError, TypeError):
+        min_word_len = 3
 
-    # Sliders are in words; clamp to safe word ranges first
-    min_length = max(10, min(min_length, 200))
-    max_length = max(min_length + 10, min(max_length, 500))
-
-    # Convert words → tokens for the HF API (BART tokenises ~1.35 tokens per word)
-    WORD_TO_TOKEN = 1.35
-    min_tokens = int(min_length * WORD_TO_TOKEN)
-    max_tokens = int(max_length * WORD_TO_TOKEN)
+    preserve_order = bool(data.get("preserve_order", True))
 
     try:
-        result = summarize(text, token=hf_token, min_length=min_tokens, max_length=max_tokens)
+        result = summarize(
+            text,
+            num_sentences=num_sentences,
+            language=language,
+            min_word_len=min_word_len,
+            preserve_order=preserve_order,
+        )
+        log.info(
+            "Summarised — in: %d words / %d sents  out: %d sents  compression: %s%%",
+            result["input_word_count"],
+            result["num_sentences_in"],
+            result["num_sentences_out"],
+            result["compression_ratio"],
+        )
         return jsonify(result)
-    except EnvironmentError as e:
-        return jsonify({"error": str(e)}), 500
-    except Exception as e:
-        import traceback
-        traceback.print_exc()          # prints full trace to Flask terminal
-        return jsonify({"error": f"Summarization failed: {str(e)}"}), 500
 
+    except Exception as exc:
+        log.exception("Summarization error: %s", exc)
+        return jsonify({"error": f"Summarization failed: {exc}"}), 500
+
+
+# ── Entry point ───────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    debug = os.environ.get("FLASK_DEBUG", "false").lower() == "true"
-    print(f"🚀  Abstractive Text Summariser API running on http://localhost:{port}")
+    log.info("Extractive NLP Summariser API — http://localhost:%d", port)
     app.run(host="0.0.0.0", port=port, debug=True, use_reloader=False)
