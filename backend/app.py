@@ -9,7 +9,7 @@ load_dotenv()
 
 # ── App setup ─────────────────────────────────────────────────────────────────
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/api/*": {"origins": ["https://thryve-summarizer.vercel.app", "http://localhost:5173"]}})
 
 logging.basicConfig(
     level=logging.INFO,
