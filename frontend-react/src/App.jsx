@@ -57,12 +57,8 @@ function App() {
         {/* PERSISTENT TOP NAVIGATION BAR */}
         <nav className="mega-nav">
           <NavLink to="/" className="brand" style={{ textDecoration: 'none' }} onClick={() => setMenuOpen(false)}>
-            <div className="logo-cube">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                <polyline points="2 17 12 22 22 17"></polyline>
-                <polyline points="2 12 12 17 22 12"></polyline>
-              </svg>
+            <div className="logo-container">
+              <img src="/THRYVE.svg" alt="THRYVE Logo" />
             </div>
             <span className="brand-name">THRYVE</span>
           </NavLink>
