@@ -150,7 +150,7 @@ export default function Home() {
         setActiveTab('summary')
 
         try {
-            const response = await fetch('http://localhost:5000/api/summarize', {
+            const response = await fetch('https://thryve-eebw.onrender.com/api/summarize', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
