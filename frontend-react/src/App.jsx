@@ -58,7 +58,7 @@ function App() {
         <nav className="mega-nav">
           <NavLink to="/" className="brand" style={{ textDecoration: 'none' }} onClick={() => setMenuOpen(false)}>
             <div className="logo-container">
-              <img src="/THRYVE.svg" alt="THRYVE Logo" />
+              <img src="/logo.png" alt="THRYVE Logo" />
             </div>
             <span className="brand-name">THRYVE</span>
           </NavLink>
