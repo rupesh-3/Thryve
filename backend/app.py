@@ -96,16 +96,23 @@ def summarize_text():
         if method == "abstractive":
             # Primary: Groq (fast, modern LLM)
             groq_key = groq_token or os.environ.get("GROQ_API_KEY")
+            hf_key   = hf_token or os.environ.get("HF_TOKEN")
+            
             if groq_key:
                 result = groq_summarize(
                     text,
                     groq_api_key=groq_key,
                     num_sentences=num_sentences,
                 )
+            elif hf_key:
+                # Secondary Fallback: HuggingFace (BART-large-CNN)
+                log.warning("GROQ_API_KEY not set — using HuggingFace fallback")
+                result = abstractive_summarize_hf(text, hf_key)
             else:
-                # Fallback: HuggingFace (BART-large-CNN)
-                log.warning("GROQ_API_KEY not set — falling back to HuggingFace")
-                result = abstractive_summarize_hf(text, hf_token)
+                # No keys provided at all
+                return jsonify({
+                    "error": "Abstractive mode requires an API Key. Please add your Groq API Key in the Settings page or as an environment variable (GROQ_API_KEY)."
+                }), 400
         else:
             # Extractive TF-IDF (always local, no key needed)
             result = summarize(
