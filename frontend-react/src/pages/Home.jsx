@@ -160,9 +160,7 @@ export default function Home() {
         const abortTimeoutId = setTimeout(() => controller.abort(), 60000)
 
         try {
-            const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-                ? 'http://localhost:5000/api/summarize'
-                : 'https://thryve-eebw.onrender.com/api/summarize';
+            const API_URL = 'https://thryve-eebw.onrender.com/api/summarize';
 
             const response = await fetch(API_URL, {
                 method: 'POST',
@@ -194,7 +192,7 @@ export default function Home() {
                 setError('Request timed out. The server might be cold or down. Please try again.')
             } else {
                 setError(err.name === 'TypeError'
-                    ? 'Cannot connect to API. Ensure the Flask server is running on port 5000.'
+                    ? 'Cannot connect to the Thryve backend. The server may be waking up — please try again in a moment.'
                     : err.message)
             }
         } finally {
