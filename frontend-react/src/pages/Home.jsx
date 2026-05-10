@@ -120,7 +120,7 @@ export default function Home() {
 
     useEffect(() => {
         // Silent ping to wake up the Render free tier server
-        fetch('https://thryve-eebw.onrender.com/api/health').catch(() => {})
+        fetch('https://thryve-eebw.onrender.com/api/health').catch(() => { })
     }, [])
 
     useEffect(() => {
@@ -155,7 +155,7 @@ export default function Home() {
         const timeoutId = setTimeout(() => {
             setWarmupStatus('Server is warming up (this can take up to 30 seconds on the free tier)...')
         }, 3000)
-        
+
         // Hard timeout at 60s
         const abortTimeoutId = setTimeout(() => controller.abort(), 60000)
 
@@ -240,9 +240,9 @@ export default function Home() {
         if (!result?.top_sentences?.length) return DOMPurify.sanitize(text)
         // Escape all special regex chars properly
         const escapeRegex = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, (c) => '\\' + c)
-        
+
         // Escape HTML before injecting highlight spans to prevent XSS
-        let highlighted = text.replace(/[&<>"']/g, function(m) {
+        let highlighted = text.replace(/[&<>"']/g, function (m) {
             return {
                 '&': '&amp;',
                 '<': '&lt;',
@@ -251,9 +251,9 @@ export default function Home() {
                 "'": '&#39;'
             }[m]
         })
-        
+
         result.top_sentences.forEach((sent) => {
-            const escapedSent = sent.replace(/[&<>"']/g, function(m) {
+            const escapedSent = sent.replace(/[&<>"']/g, function (m) {
                 return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]
             })
             const pattern = new RegExp(escapeRegex(escapedSent), 'g')
@@ -262,7 +262,7 @@ export default function Home() {
                 () => `<mark class="highlight-sentence">${escapedSent}</mark>`
             )
         })
-        
+
         // Finally run it through DOMPurify just to be extremely safe
         return DOMPurify.sanitize(highlighted)
     }
@@ -358,7 +358,7 @@ export default function Home() {
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'column' }}>
                             <span style={{ fontFamily: 'var(--font-display)', fontSize: '13px', fontWeight: 700, color: engineMode === 'abstractive' ? 'var(--neon-purple)' : 'rgba(255,255,255,0.4)' }}>
-                                Abstractive — Groq AI ✦
+                                Abstractive
                             </span>
                             <span style={{ fontFamily: 'var(--font-display)', fontSize: '10px', color: engineMode === 'abstractive' ? 'rgba(140,0,255,0.7)' : 'rgba(255,255,255,0.2)', letterSpacing: '0.5px' }}>
                                 rewrites in original language
@@ -369,79 +369,79 @@ export default function Home() {
 
                 {/* Summary Depth Mode Selector */}
                 {engineMode === 'extractive' && (
-                <div style={{ marginTop: '16px' }}>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', gap: '8px' }}>
-                        <span style={{ fontFamily: 'var(--font-display)', fontSize: '12px', fontWeight: 700, letterSpacing: '1.2px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)' }}>
-                            Summary Depth
-                        </span>
-                        {result ? (
-                            <span style={{ fontFamily: 'var(--font-display)', fontSize: '11px', color: 'rgba(0,240,255,0.6)', background: 'rgba(0,240,255,0.07)', border: '1px solid rgba(0,240,255,0.2)', borderRadius: '6px', padding: '2px 10px' }}>
-                                {result.num_sentences_out} of {result.num_sentences_in} sentences
+                    <div style={{ marginTop: '16px' }}>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', gap: '8px' }}>
+                            <span style={{ fontFamily: 'var(--font-display)', fontSize: '12px', fontWeight: 700, letterSpacing: '1.2px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)' }}>
+                                Summary Depth
                             </span>
-                        ) : sentenceCount > 0 ? (
-                            <span style={{ fontFamily: 'var(--font-display)', fontSize: '11px', color: 'rgba(0,240,255,0.6)', background: 'rgba(0,240,255,0.07)', border: '1px solid rgba(0,240,255,0.2)', borderRadius: '6px', padding: '2px 10px' }}>
-                                ~{numSentences} of ~{sentenceCount} sentences (est.)
-                            </span>
-                        ) : null}
-                    </div>
-                    <div className="stats-four-col" style={{ gap: '10px' }}>
-                        {MODES.map(mode => {
-                            const isActive = selectedMode === mode.id
-                            return (
-                                <button
-                                    key={mode.id}
-                                    onClick={() => setSelectedMode(mode.id)}
-                                    style={{
-                                        position: 'relative',
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        alignItems: 'center',
-                                        gap: '6px',
-                                        padding: '14px 8px',
-                                        borderRadius: '14px',
-                                        border: isActive
-                                            ? '1.5px solid rgba(0,240,255,0.55)'
-                                            : '1.5px solid rgba(255,255,255,0.07)',
-                                        background: isActive
-                                            ? 'linear-gradient(135deg, rgba(0,240,255,0.10), rgba(140,0,255,0.10))'
-                                            : 'rgba(255,255,255,0.03)',
-                                        cursor: 'pointer',
-                                        transition: 'all 0.22s cubic-bezier(.4,0,.2,1)',
-                                        boxShadow: isActive ? '0 0 18px rgba(0,240,255,0.12)' : 'none',
-                                        transform: isActive ? 'translateY(-2px)' : 'none',
-                                    }}
-                                >
-                                    {isActive && (
-                                        <div style={{
-                                            position: 'absolute', top: '7px', right: '7px',
-                                            width: '6px', height: '6px',
-                                            borderRadius: '50%',
-                                            background: 'var(--neon-cyan)',
-                                            boxShadow: '0 0 6px var(--neon-cyan)',
-                                        }} />
-                                    )}
-                                    <ModeIcon id={mode.id} active={isActive} />
-                                    <span style={{
-                                        fontFamily: 'var(--font-display)',
-                                        fontWeight: 700,
-                                        fontSize: '12px',
-                                        letterSpacing: '0.5px',
-                                        color: isActive ? 'var(--neon-cyan)' : 'rgba(255,255,255,0.75)',
-                                        transition: 'color 0.2s',
-                                    }}>{mode.label}</span>
-                                    <span style={{
-                                        fontFamily: 'var(--font-body)',
-                                        fontSize: '10px',
-                                        color: 'rgba(255,255,255,0.35)',
-                                        textAlign: 'center',
-                                        lineHeight: 1.3,
-                                    }}>{mode.desc}</span>
+                            {result ? (
+                                <span style={{ fontFamily: 'var(--font-display)', fontSize: '11px', color: 'rgba(0,240,255,0.6)', background: 'rgba(0,240,255,0.07)', border: '1px solid rgba(0,240,255,0.2)', borderRadius: '6px', padding: '2px 10px' }}>
+                                    {result.num_sentences_out} of {result.num_sentences_in} sentences
+                                </span>
+                            ) : sentenceCount > 0 ? (
+                                <span style={{ fontFamily: 'var(--font-display)', fontSize: '11px', color: 'rgba(0,240,255,0.6)', background: 'rgba(0,240,255,0.07)', border: '1px solid rgba(0,240,255,0.2)', borderRadius: '6px', padding: '2px 10px' }}>
+                                    ~{numSentences} of ~{sentenceCount} sentences (est.)
+                                </span>
+                            ) : null}
+                        </div>
+                        <div className="stats-four-col" style={{ gap: '10px' }}>
+                            {MODES.map(mode => {
+                                const isActive = selectedMode === mode.id
+                                return (
+                                    <button
+                                        key={mode.id}
+                                        onClick={() => setSelectedMode(mode.id)}
+                                        style={{
+                                            position: 'relative',
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            alignItems: 'center',
+                                            gap: '6px',
+                                            padding: '14px 8px',
+                                            borderRadius: '14px',
+                                            border: isActive
+                                                ? '1.5px solid rgba(0,240,255,0.55)'
+                                                : '1.5px solid rgba(255,255,255,0.07)',
+                                            background: isActive
+                                                ? 'linear-gradient(135deg, rgba(0,240,255,0.10), rgba(140,0,255,0.10))'
+                                                : 'rgba(255,255,255,0.03)',
+                                            cursor: 'pointer',
+                                            transition: 'all 0.22s cubic-bezier(.4,0,.2,1)',
+                                            boxShadow: isActive ? '0 0 18px rgba(0,240,255,0.12)' : 'none',
+                                            transform: isActive ? 'translateY(-2px)' : 'none',
+                                        }}
+                                    >
+                                        {isActive && (
+                                            <div style={{
+                                                position: 'absolute', top: '7px', right: '7px',
+                                                width: '6px', height: '6px',
+                                                borderRadius: '50%',
+                                                background: 'var(--neon-cyan)',
+                                                boxShadow: '0 0 6px var(--neon-cyan)',
+                                            }} />
+                                        )}
+                                        <ModeIcon id={mode.id} active={isActive} />
+                                        <span style={{
+                                            fontFamily: 'var(--font-display)',
+                                            fontWeight: 700,
+                                            fontSize: '12px',
+                                            letterSpacing: '0.5px',
+                                            color: isActive ? 'var(--neon-cyan)' : 'rgba(255,255,255,0.75)',
+                                            transition: 'color 0.2s',
+                                        }}>{mode.label}</span>
+                                        <span style={{
+                                            fontFamily: 'var(--font-body)',
+                                            fontSize: '10px',
+                                            color: 'rgba(255,255,255,0.35)',
+                                            textAlign: 'center',
+                                            lineHeight: 1.3,
+                                        }}>{mode.desc}</span>
 
-                                </button>
-                            )
-                        })}
+                                    </button>
+                                )
+                            })}
+                        </div>
                     </div>
-                </div>
                 )}
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '40px' }}>
@@ -512,8 +512,8 @@ export default function Home() {
                                         {result.method === 'abstractive-groq'
                                             ? 'AI Summary'
                                             : result.method === 'abstractive-hf'
-                                            ? 'AI Summary (HuggingFace)'
-                                            : 'Extracted Summary'}
+                                                ? 'AI Summary (HuggingFace)'
+                                                : 'Extracted Summary'}
                                     </h3>
                                     <span style={{
                                         fontSize: '11px', fontFamily: 'var(--font-display)',
@@ -524,8 +524,8 @@ export default function Home() {
                                         {result.method === 'abstractive-groq'
                                             ? '✦ Groq · openai/gpt-oss-120b · Paraphrased'
                                             : result.method === 'abstractive-hf'
-                                            ? 'HuggingFace · BART-large-CNN'
-                                            : 'TF-IDF · MMR Diversity · NLTK'}
+                                                ? 'HuggingFace · BART-large-CNN'
+                                                : 'TF-IDF · MMR Diversity · NLTK'}
                                     </span>
                                 </div>
                                 <div style={{ display: 'flex', gap: '8px' }}>
@@ -605,8 +605,8 @@ export default function Home() {
                                 {result.method === 'abstractive-groq'
                                     ? 'Engine: Groq AI (openai/gpt-oss-120b) · Abstractive paraphrasing'
                                     : result.method === 'abstractive-hf'
-                                    ? 'Engine: HuggingFace · BART-large-CNN · Abstractive'
-                                    : 'Engine: Extractive · TF-IDF + MMR Diversity · NLTK'}
+                                        ? 'Engine: HuggingFace · BART-large-CNN · Abstractive'
+                                        : 'Engine: Extractive · TF-IDF + MMR Diversity · NLTK'}
                             </div>
                         </>
                     )}
