@@ -1,71 +1,62 @@
 <h1 align="center">
   <br>
-  ✦ THRYVE
+  ✦ THRYVE AI
   <br>
 </h1>
 
-<h4 align="center">Advanced Extractive Text Summarisation via TF-IDF Scoring, React, and NLTK.</h4>
+<h4 align="center">High-Performance Hybrid NLP Summarization Engine powered by Groq AI, React, and Flask.</h4>
 
 <p align="center">
   <a href="#about-the-project">About The Project</a> •
-  <a href="#architecture">Architecture</a> •
-  <a href="#features">Features</a> •
+  <a href="#key-features">Key Features</a> •
+  <a href="#hybrid-architecture">Architecture</a> •
   <a href="#quick-start">Quick Start</a> •
-  <a href="#mobile--analytics">Mobile & Analytics</a>
+  <a href="#security--optimization">Security</a>
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Frontend-React%2BVite-61dafb?style=flat-square&logo=react" alt="React" />
-  <img src="https://img.shields.io/badge/UI-Mega%20Glassmorphism-8b5cf6?style=flat-square" alt="UI" />
+  <img src="https://img.shields.io/badge/AI_Engine-Groq_Llama_3.1-f505ff?style=flat-square" alt="Groq" />
   <img src="https://img.shields.io/badge/Backend-Flask-white?style=flat-square&logo=flask" alt="Backend" />
-  <img src="https://img.shields.io/badge/Analytics-Recharts-00f0ff?style=flat-square" alt="Recharts" />
+  <img src="https://img.shields.io/badge/UI-Mega_Glassmorphism-8b5cf6?style=flat-square" alt="UI" />
 </p>
 
 ---
 
 ## About The Project
 
-**THRYVE** is a stunning, high-performance web application designed to distill complex information into concise, statistically significant summaries. 
+**THRYVE AI** is a cutting-edge, hybrid summarization platform designed to transform massive documents into high-quality, actionable insights. By combining **Extractive statistical analysis** with **Abstractive AI synthesis**, THRYVE offers the best of both worlds: factual precision and human-like paraphrasing.
 
-The engine utilizes **Extractive Summarisation**, powered by a custom **TF-IDF (Term Frequency-Inverse Document Frequency)** scoring pipeline. Instead of generating new text, it identifies and extracts the most information-dense sentences directly from the source, ensuring 100% factual accuracy and zero "AI Hallucinations."
-
-With a "Mega Design" aesthetic featuring deep glassmorphism and glowing neon accents, THRYVE provides a premium UX for researchers, students, and professionals.
+Powered by the **Groq AI LPU™ Inference Engine**, THRYVE delivers near-instant abstractive summaries using state-of-the-art models like Llama-3.1, while maintaining an offline-ready Extractive engine for local processing.
 
 ---
 
-## Architecture
+## Key Features
 
-The project is architected with a modern decoupled stack:
-
-1. **Frontend UI (`/frontend-react`)** 
-   * **React 18 & Vite**: Ultra-fast development and optimized production builds.
-   * **Recharts Dashboard**: Professional data visualization for session compression history and word reduction metrics.
-   * **Mobile-First Design**: Fully responsive UI with a custom Hamburger Navigation system for iOS and Android.
-   * **Local Persistence**: Settings and session history are stored safely in `localStorage`.
-
-2. **Flask Backend (`/backend`)**
-   * **NLTK Pipeline**: Handles tokenization, sentence splitting, and stopword removal.
-   * **TF-IDF Engine**: Uses `CountVectorizer` and TF-IDF transformers to score sentence importance relative to the document context.
-   * **RESTful API**: Lightweight and fast endpoint for processing multi-thousand word documents in milliseconds.
+- **Hybrid Intelligence**: Toggle between **Abstractive (AI Rewrite)** and **Extractive (Sentence Selection)** modes based on your specific use case.
+- **Groq AI Integration**: Ultra-fast, paraphrased summaries that synthesize complex ideas into flowing, original paragraphs.
+- **Hierarchical Document Chunking**: Handles 10+ page documents with ease by intelligently breaking text into context-aware chunks for full-coverage summarization.
+- **Adaptive Length Scaling**: Dynamic output length calculation ensures your summary is perfectly proportioned to the original source size.
+- **MMR Diversity Scoring**: Extractive mode uses **Maximal Marginal Relevance** to ensure summaries are diverse and free from repetitive sentences.
+- **Advanced History Tracking**: Searchable session history with stable Primary Keys, allowing you to filter by ID, method, or content.
+- **Premium Glassmorphism UI**: A state-of-the-art, dark-mode interface with glowing neon accents and fully responsive controls.
 
 ---
 
-## Features
+## Hybrid Architecture
 
-- **Precision Extraction**: Statistical sentence scoring via TF-IDF ensures the most relevant content is always preserved.
-- **Interactive Analytics**: Monitor your summarization trends with high-quality Area and Bar charts.
-- **Customizable Depth**: Define exactly how much information you want (Concise, Standard, or Detailed) via pre-set modes or manual sentence count.
-- **Responsive Navigation**: A slick hamburger menu ensures 100% usability on mobile devices.
-- **Ultra-Fast Performance**: Local extraction logic means summaries appear in a heartbeat, with no waiting for heavy LLM inference.
+### 1. Frontend Logic (`/frontend-react`)
+* **React 18 & Vite**: Lightning-fast UI state management.
+* **Smart Navigation**: A unified dashboard for synthesis, settings, and profile analytics.
+* **Local Persistence**: All API keys and user configurations are encrypted and stored in `localStorage`.
+* **Dynamic Results Panel**: Tailored rendering for AI prose vs. extractive bullet points.
 
----
-
-## Mobile & Analytics
-
-THRYVE has been optimized for the modern mobile web:
-* **Glassmorphism UI**: High-end visual effects that remain performant and beautiful on mobile viewports.
-* **Auto-Stacking Grids**: Dashboard metrics and config boxes automatically reflow into a clean vertical list on smaller screens.
-* **Recharts Visuals**: Responsive SVG charts that scale perfectly from 4K monitors down to iPhone screens.
+### 2. Intelligent Backend (`/backend`)
+* **Dual-Path Pipeline**:
+    * **Abstractive Path**: Orchestrates calls to **Groq AI** with an automatic fallback to **HuggingFace (BART)**.
+    * **Extractive Path**: A local, TF-IDF + MMR engine using **NLTK** for privacy-first, zero-cost processing.
+* **Context Preservation**: Implements position bias to prioritize critical introductions and conclusions in large documents.
+* **Security Hardening**: Built-in health checks and environment sanitation for production readiness.
 
 ---
 
@@ -74,28 +65,40 @@ THRYVE has been optimized for the modern mobile web:
 ### Prerequisites
 * Python 3.10+
 * Node.js v18+
+* [Groq API Key](https://console.groq.com) (Recommended for Abstractive mode)
 
-### 1. Setup the Backend
+### 1. Launch the Backend
 ```bash
 cd backend
 python -m venv venv
-# Windows: venv\\Scripts\\activate | Mac/Linux: source venv/bin/activate
+# Windows: venv\Scripts\activate | Mac/Linux: source venv/bin/activate
 pip install -r requirements.txt
 python app.py
 ```
 
-### 2. Setup the Frontend
+### 2. Launch the Frontend
 ```bash
 cd frontend-react
 npm install
 npm run dev
 ```
 
-Visit `http://localhost:5173` to start distilling!
+### 3. Configuration
+1. Open the **Settings** page in the app.
+2. Enter your **Groq API Key**.
+3. Return to the **Engine** page and select **Abstractive — Groq AI ✦**.
+
+---
+
+## Security & Optimization
+
+- **Zero-Leaking Environment**: Updated `.gitignore` prevents `node_modules`, `.env` files, and build artifacts from ever hitting version control.
+- **High-Octane Performance**: Optimized for Render/Vercel with built-in cron-job health checks to prevent service spin-down.
+- **Automated Regression Suite**: Comprehensive PyTest suite covering 45+ core NLP logic points.
 
 ---
 
 ## Credits
-- Built with [React](https://reactjs.org/), [Vite](https://vitejs.dev/), and [Flask](https://flask.palletsprojects.com/).
-- NLP logic powered by [NLTK](https://www.nltk.org/) and pure Python math.
-- Visualizations by [Recharts](https://recharts.org/).
+- **AI Models**: Llama-3.1 via [Groq](https://groq.com/).
+- **NLP**: [NLTK](https://www.nltk.org/) & [Rouge-Score](https://github.com/google-research/google-research/tree/master/rouge).
+- **Frontend**: [React](https://reactjs.org/) & [Vite](https://vitejs.dev/).
