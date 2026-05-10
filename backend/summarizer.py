@@ -292,7 +292,10 @@ def _groq_call(client, model: str, text: str, target_words: int,
         temperature=0.5,
         max_tokens=max_tokens,
     )
-    return resp.choices[0].message.content.strip()
+    summary = resp.choices[0].message.content.strip()
+    if not summary:
+        raise RuntimeError(f"The AI model ({model}) returned an empty response. Please try again or check your API usage limits.")
+    return summary
 
 
 def _adaptive_length(input_words: int) -> tuple:
@@ -318,7 +321,7 @@ def _adaptive_length(input_words: int) -> tuple:
 def groq_summarize(
     text: str,
     groq_api_key: str = None,
-    model: str = "openai/gpt-oss-120b",
+    model: str = "llama-3.1-8b-instant",
     num_sentences: int = 3,
 ) -> dict:
     """
