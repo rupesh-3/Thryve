@@ -160,7 +160,11 @@ export default function Home() {
         const abortTimeoutId = setTimeout(() => controller.abort(), 60000)
 
         try {
-            const response = await fetch('http://localhost:5000/api/summarize', {
+            const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+                ? 'http://localhost:5000/api/summarize'
+                : 'https://thryve-eebw.onrender.com/api/summarize';
+
+            const response = await fetch(API_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
