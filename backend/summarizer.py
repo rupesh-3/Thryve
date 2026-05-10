@@ -2,7 +2,7 @@
 Thryve NLP Pipeline — Extractive + Abstractive Summarizer
 ==========================================================
 Extractive: NLTK Punkt + TF-IDF + Position Bias + MMR Diversity
-Abstractive: Groq LLM (primary) | HuggingFace BART (fallback)
+Abstractive: Neural LLM (primary) | HuggingFace BART (fallback)
 """
 
 import math
@@ -235,7 +235,7 @@ def summarize(
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# ABSTRACTIVE ENGINE — Groq (primary) | HuggingFace (fallback)
+# ABSTRACTIVE ENGINE — Neural LLM (primary) | HuggingFace (fallback)
 # ══════════════════════════════════════════════════════════════════════════════
 
 def _chunk_text(text: str, chunk_words: int = 1200) -> list:
@@ -261,7 +261,7 @@ def _chunk_text(text: str, chunk_words: int = 1200) -> list:
 def _groq_call(client, model: str, text: str, target_words: int,
                max_tokens: int) -> str:
     """
-    Single Groq API call.
+    Single Neural LLM API call.
     The prompt explicitly forbids copying sentences verbatim — the model
     must synthesise and paraphrase in its own words.
     """
@@ -325,7 +325,7 @@ def groq_summarize(
     num_sentences: int = 3,
 ) -> dict:
     """
-    Abstractive summarization via Groq.
+    Abstractive summarization via Neural LLM.
 
     Strategy:
     - Short docs (< 2 000 words): single API call with adaptive target length.
@@ -339,7 +339,7 @@ def groq_summarize(
     api_key = groq_api_key or os.environ.get("GROQ_API_KEY")
     if not api_key:
         raise ValueError(
-            "No Groq API key provided. Add GROQ_API_KEY to backend/.env or enter it in Settings."
+            "No Neural API key provided. Add GROQ_API_KEY to backend/.env or enter it in Settings."
         )
 
     client      = GroqClient(api_key=api_key)

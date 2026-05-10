@@ -127,7 +127,7 @@ export default function Profile() {
                     <div style={{ width: '100%', borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '16px', marginTop: '4px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
                         {[
                             { k: 'Engine', v: 'Hybrid (AI + Local)', vc: 'var(--neon-purple)' },
-                            { k: 'Libraries', v: 'Groq API / NLTK', vc: '#fff' },
+                            { k: 'Libraries', v: 'Neural LLM / NLTK', vc: '#fff' },
                             { k: 'Compute', v: 'Cloud + Edge', vc: 'var(--success-color)' },
                         ].map(({ k, v, vc }) => (
                             <div key={k} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', fontFamily: 'var(--font-display)' }}>
@@ -222,7 +222,7 @@ export default function Profile() {
                                                 </td>
                                                 <td style={{ padding: '12px 14px', color: 'var(--neon-cyan)', fontFamily: 'var(--font-display)', fontWeight: 600 }}>{h.sentOut} / {h.sentIn}</td>
                                                 <td style={{ padding: '12px 14px', color: h.method?.startsWith('abstractive') ? 'var(--neon-purple)' : 'rgba(255,255,255,0.3)', fontSize: '12px', fontFamily: 'var(--font-display)', fontWeight: h.method?.startsWith('abstractive') ? 700 : 400 }}>
-                                                    {h.method === 'abstractive-groq' ? 'Groq AI (Abstractive)' : 
+                                                    {h.method === 'abstractive-groq' ? 'Neural AI (Abstractive)' : 
                                                      h.method === 'abstractive-hf' ? 'HuggingFace (Abstractive)' : 
                                                      'TF-IDF Extractive'}
                                                 </td>

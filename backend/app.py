@@ -111,7 +111,7 @@ def summarize_text():
             else:
                 # No keys provided at all
                 return jsonify({
-                    "error": "Abstractive mode requires an API Key. Please add your Groq API Key in the Settings page or as an environment variable (GROQ_API_KEY)."
+                    "error": "Abstractive mode requires an API Key. Please add your Neural API Key in the Settings page or as an environment variable (GROQ_API_KEY)."
                 }), 400
         else:
             # Extractive TF-IDF (always local, no key needed)

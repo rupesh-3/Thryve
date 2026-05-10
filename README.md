@@ -4,7 +4,7 @@
   <br>
 </h1>
 
-<h4 align="center">High-Performance Hybrid NLP Summarization Engine powered by Groq AI, React, and Flask.</h4>
+<h4 align="center">High-Performance Hybrid NLP Summarization Engine powered by Neural LLM AI, React, and Flask.</h4>
 
 <p align="center">
   <a href="#about-the-project">About The Project</a> •
@@ -16,7 +16,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Frontend-React%2BVite-61dafb?style=flat-square&logo=react" alt="React" />
-  <img src="https://img.shields.io/badge/AI_Engine-Groq_Llama_3.1-f505ff?style=flat-square" alt="Groq" />
+  <img src="https://img.shields.io/badge/AI_Engine-Neural_LLM-f505ff?style=flat-square" alt="Neural LLM" />
   <img src="https://img.shields.io/badge/Backend-Flask-white?style=flat-square&logo=flask" alt="Backend" />
   <img src="https://img.shields.io/badge/UI-Mega_Glassmorphism-8b5cf6?style=flat-square" alt="UI" />
 </p>
@@ -27,14 +27,14 @@
 
 **THRYVE AI** is a cutting-edge, hybrid summarization platform designed to transform massive documents into high-quality, actionable insights. By combining **Extractive statistical analysis** with **Abstractive AI synthesis**, THRYVE offers the best of both worlds: factual precision and human-like paraphrasing.
 
-Powered by the **Groq AI LPU™ Inference Engine**, THRYVE delivers near-instant abstractive summaries using state-of-the-art models like Llama-3.1, while maintaining an offline-ready Extractive engine for local processing.
+Powered by the **Neural LLM AI Engine**, THRYVE delivers near-instant abstractive summaries using state-of-the-art models like Llama-3.1, while maintaining an offline-ready Extractive engine for local processing.
 
 ---
 
 ## Key Features
 
 - **Hybrid Intelligence**: Toggle between **Abstractive (AI Rewrite)** and **Extractive (Sentence Selection)** modes based on your specific use case.
-- **Groq AI Integration**: Ultra-fast, paraphrased summaries that synthesize complex ideas into flowing, original paragraphs.
+- **Neural LLM Integration**: Ultra-fast, paraphrased summaries that synthesize complex ideas into flowing, original paragraphs.
 - **Hierarchical Document Chunking**: Handles 10+ page documents with ease by intelligently breaking text into context-aware chunks for full-coverage summarization.
 - **Adaptive Length Scaling**: Dynamic output length calculation ensures your summary is perfectly proportioned to the original source size.
 - **MMR Diversity Scoring**: Extractive mode uses **Maximal Marginal Relevance** to ensure summaries are diverse and free from repetitive sentences.
@@ -53,7 +53,7 @@ Powered by the **Groq AI LPU™ Inference Engine**, THRYVE delivers near-instant
 
 ### 2. Intelligent Backend (`/backend`)
 * **Dual-Path Pipeline**:
-    * **Abstractive Path**: Orchestrates calls to **Groq AI** with an automatic fallback to **HuggingFace (BART)**.
+    * **Abstractive Path**: Orchestrates calls to **Neural LLM AI** with an automatic fallback to **HuggingFace (BART)**.
     * **Extractive Path**: A local, TF-IDF + MMR engine using **NLTK** for privacy-first, zero-cost processing.
 * **Context Preservation**: Implements position bias to prioritize critical introductions and conclusions in large documents.
 * **Security Hardening**: Built-in health checks and environment sanitation for production readiness.
@@ -65,7 +65,7 @@ Powered by the **Groq AI LPU™ Inference Engine**, THRYVE delivers near-instant
 ### Prerequisites
 * Python 3.10+
 * Node.js v18+
-* [Groq API Key](https://console.groq.com) (Recommended for Abstractive mode)
+* [Neural API Key](https://console.groq.com) (Recommended for Abstractive mode)
 
 ### 1. Launch the Backend
 ```bash
@@ -85,8 +85,8 @@ npm run dev
 
 ### 3. Configuration
 1. Open the **Settings** page in the app.
-2. Enter your **Groq API Key**.
-3. Return to the **Engine** page and select **Abstractive — Groq AI ✦**.
+2. Enter your **Neural API Key**.
+3. Return to the **Engine** page and select **Abstractive — Neural LLM ✦**.
 
 ---
 
@@ -99,6 +99,6 @@ npm run dev
 ---
 
 ## Credits
-- **AI Models**: Llama-3.1 via [Groq](https://groq.com/).
+- **AI Models**: Llama-3.1 via **Neural LLM AI**.
 - **NLP**: [NLTK](https://www.nltk.org/) & [Rouge-Score](https://github.com/google-research/google-research/tree/master/rouge).
 - **Frontend**: [React](https://reactjs.org/) & [Vite](https://vitejs.dev/).

@@ -221,10 +221,10 @@ export default function Settings() {
                             <div style={{ marginBottom: '10px' }}>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '3px' }}>
                                     <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--neon-purple)', boxShadow: '0 0 8px var(--neon-purple)', flexShrink: 0 }} />
-                                    <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: '13px', color: '#fff' }}>Groq API Key</div>
+                                    <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: '13px', color: '#fff' }}>Neural LLM API Key</div>
                                 </div>
                                 <div style={{ fontFamily: 'var(--font-body)', fontSize: '11px', color: 'rgba(255,255,255,0.35)', lineHeight: 1.5 }}>
-                                    Primary engine for Abstractive AI summarization (Llama-3.1). Get a free key at console.groq.com
+                                    Primary engine for Abstractive AI summarization (Llama-3.1). Get a free key at the provider console.
                                 </div>
                             </div>
                             <input
@@ -245,7 +245,7 @@ export default function Settings() {
                         </div>
 
                         <div style={cardStyle}>
-                            {fieldLabel('HuggingFace API Token', 'Fallback for Abstractive mode (BART-large-CNN). Used if Groq key is not set.')}
+                            {fieldLabel('HuggingFace API Token', 'Fallback for Abstractive mode (BART-large-CNN). Used if Neural key is not set.')}
                             <input
                                 id="hf-token-input"
                                 type="password"

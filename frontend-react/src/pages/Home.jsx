@@ -290,7 +290,7 @@ export default function Home() {
         <>
             <section className="hero-section">
                 <div className="hero-badge">
-                    {engineMode === 'abstractive' ? 'Abstractive AI · Groq LLM' : 'Extractive NLP · TF-IDF Scoring'}
+                    {engineMode === 'abstractive' ? 'Abstractive AI · Neural LLM' : 'Extractive NLP · TF-IDF Scoring'}
                 </div>
                 <h1 className="mega-title">
                     Distill the <span>Noise.</span>
@@ -522,7 +522,7 @@ export default function Home() {
                                             ? 'rgba(140,0,255,0.7)' : 'rgba(0,240,255,0.5)'
                                     }}>
                                         {result.method === 'abstractive-groq'
-                                            ? '✦ Groq · openai/gpt-oss-120b · Paraphrased'
+                                            ? '✦ Neural · gpt-oss-120b · Paraphrased'
                                             : result.method === 'abstractive-hf'
                                                 ? 'HuggingFace · BART-large-CNN'
                                                 : 'TF-IDF · MMR Diversity · NLTK'}
@@ -603,7 +603,7 @@ export default function Home() {
 
                             <div style={{ marginTop: '20px', paddingTop: '16px', borderTop: '1px solid rgba(255,255,255,0.06)', fontSize: '12px', color: 'rgba(255,255,255,0.3)', fontFamily: 'var(--font-display)', letterSpacing: '0.5px' }}>
                                 {result.method === 'abstractive-groq'
-                                    ? 'Engine: Groq AI (openai/gpt-oss-120b) · Abstractive paraphrasing'
+                                    ? 'Engine: Neural LLM (gpt-oss-120b) · Abstractive paraphrasing'
                                     : result.method === 'abstractive-hf'
                                         ? 'Engine: HuggingFace · BART-large-CNN · Abstractive'
                                         : 'Engine: Extractive · TF-IDF + MMR Diversity · NLTK'}
